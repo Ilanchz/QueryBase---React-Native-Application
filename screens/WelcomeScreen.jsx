@@ -47,7 +47,7 @@ function WelcomeScreen() {
 
   if (!fontsLoaded || loading) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", width: "100%", height: "100%" }}>
+      <View style={{justifyContent: "center", alignItems: "center", width: "100%", height: "100%" }}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     ); // Needs a loading screen
@@ -60,42 +60,43 @@ function WelcomeScreen() {
           </View>
         </View>
 
-        <View style={styles.NavigationBarContainer}>
-          <View style={styles.NavigationBarWrapper}>
-            <TouchableOpacity>
-              <Image source={QueryLogo} style={styles.resizeComplainLogo}></Image>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image source={complainImage} style={styles.resizeComplainLogo}></Image>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image source={ProfileLogo} style={styles.resizeComplainLogo}></Image>
-            </TouchableOpacity>
+        
+
+        
+        <View style={styles.scrollWrapper}>
+          <ScrollView contentContainerStyle={styles.MainPageContainer} scrollEnabled={true}>
+            
+              <HomeScreenCard
+                title="New Complaint"
+                description="Contact our officials to register a complaint and interact with them to resolve your issues"
+                imageSource={complainImage}
+                onPress={triggerNewComplaint}
+              />
+              <HomeScreenCard
+                title="New Query"
+                description="Contact our officials to resolve a query and interact with them to gain more insights"
+                imageSource={QueryLogo}
+                onPress={triggerNewQuery}
+              />
+              
+          </ScrollView>
+          <View style={styles.NavigationBarContainer}>
+            <View style={styles.NavigationBarWrapper}>
+              <TouchableOpacity>
+                <Image source={QueryLogo} style={styles.resizeComplainLogo}></Image>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image source={complainImage} style={styles.resizeComplainLogo}></Image>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image source={ProfileLogo} style={styles.resizeComplainLogo}></Image>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
 
-        <ScrollView contentContainerStyle={styles.MainPageContainer} scrollEnabled={true}>
-          <HomeScreenCard
-            title="New Complaint"
-            description="Contact our officials to register a complaint and interact with them to resolve your issues"
-            imageSource={complainImage}
-            onPress={triggerNewComplaint}
-          />
-          <HomeScreenCard
-            title="New Query"
-            description="Contact our officials to resolve a query and interact with them to gain more insights"
-            imageSource={QueryLogo}
-            onPress={triggerNewQuery}
-          />
-          <HomeScreenCard
-            title="New Query"
-            description="Contact our officials to resolve a query and interact with them to gain more insights"
-            imageSource={QueryLogo}
-            onPress={triggerNewQuery}
-          />
-          
-        </ScrollView>
-
+        
+        
       </View>
     );
   }
@@ -104,7 +105,6 @@ function WelcomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
     backgroundColor: '#483670',
     alignItems: 'center',
     paddingTop: statusBarHeight,
@@ -132,6 +132,10 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     backgroundColor: '#e9e4f5',
+    paddingBottom: 80, // Adjust paddingBottom to accommodate the NavigationBarContainer height
+  },
+  scrollWrapper: {
+    paddingBottom: 137,
   },
   resizeComplainLogo: {
     width: 50,
@@ -140,18 +144,15 @@ const styles = StyleSheet.create({
   },
   NavigationBarContainer: {
     width: "100%",
-    position: "absolute",
     backgroundColor: "#0c0326",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: 50,
     zIndex: 100, // Should make this responsive to layout
+    
   },
   NavigationBarWrapper: {
+    width: "100%",
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    height: 50,
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });
 
