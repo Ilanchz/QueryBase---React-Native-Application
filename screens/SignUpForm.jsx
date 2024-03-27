@@ -45,7 +45,6 @@ function SignUpForm(){
         <ScrollView contentContainerStyle={styles.container}>
           <View style={styles.SignUpWrapper}>
             <Text style={styles.TitleText}>Create New Account</Text>
-            <Text style={[styles.LoginPrompt, hoverState ? styles.hovered : null]} onPress={SwitchToLogin} onPressIn={ButtonIn} onPressOut={ButtonOut}>Already Registered? Log in Here</Text>
             <View style={styles.inputContainer}>
               <Text style={styles.TextTitle}>NAME</Text>
               <TextInput placeholder='Name' style={styles.TextBox} onChangeText={(Name)=>{
@@ -71,6 +70,7 @@ function SignUpForm(){
               }}></TextInput>
             </View>
             <TouchableOpacity style={styles.ButtonWrapper} onPress={handleSignUp}><Text style={styles.SignUpButtonText}>Sign-Up</Text></TouchableOpacity>
+            <Text style={[styles.LoginPrompt, hoverState ? styles.hovered : null]} onPress={SwitchToLogin} onPressIn={ButtonIn} onPressOut={ButtonOut}>Already Registered? Log in Here</Text>
           </View>
         </ScrollView>
       );
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
       textAlign: "center",
       color: "green",
       marginBottom: 20,
+      marginTop: 20,
       textDecorationLine: 'underline',
     },
     TextTitle:{

@@ -46,7 +46,6 @@ function LoginForm(){
         <ScrollView contentContainerStyle={styles.container}>
           <View style={styles.LoginInWrapper}>
             <Text style={styles.TitleText}>Sign In</Text>
-            <Text style={[styles.LoginPrompt, hoverState ? styles.hovered : null]} onPress={SwitchToSign} onPressIn={ButtonIn} onPressOut={ButtonOut}>Dont Have an Account? Sign up here</Text>
             <View style={styles.inputContainer}>
               <Text style={styles.TextTitle} >EMAIL</Text>
               <TextInput placeholder='Email' style={styles.TextBox} onChangeText={(emailText)=>{
@@ -60,6 +59,8 @@ function LoginForm(){
               }}></TextInput>
             </View>
             <TouchableOpacity style={styles.ButtonWrapper} onPress={handleLogin}><Text style={styles.LoginInButtonText }>Login</Text></TouchableOpacity>
+            <Text style={[styles.LoginPrompt, hoverState ? styles.hovered : null]} onPress={SwitchToSign} onPressIn={ButtonIn} onPressOut={ButtonOut}>Dont Have an Account? Sign up here</Text>
+
           </View>
         </ScrollView>
       );
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
       fontSize: 15,
       textAlign: "center",
       color: "red",
+      marginTop: 20,
       marginBottom: 20,
       textDecorationLine: 'underline',
     },
