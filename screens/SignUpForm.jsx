@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { TouchableOpacity, StyleSheet, Text, TextInput, View,Alert, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import {auth} from "../firebaseConnect";
+import {auth,addUserInitialData} from "../firebaseConnect";
 
 function SignUpForm(){
 
@@ -14,19 +14,19 @@ function SignUpForm(){
   const navigation = useNavigation();
   const [hoverState,setHoverState]=useState(false);
 
-  function handleSignUp(){
-    auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log('User Created:', user.email);
-          //After Creating of User Add the Name and DateOfBirth Details to firestore
-        })
-        .catch((error) => {
-          // Handle signup error
-          // User Already exists error
-          Alert.alert('Error', error.message);
-        });
+  async function handleSignUp() {
+    try {
+      // After creating the user, add the Name and DateOfBirth details to Firestore
+      await addUserInitialData(password,email, name, dob);
+      // Navigate to the login screen or perform any other action upon successful sign-up
+      navigation.navigate('Login');
+    } catch (error) {
+      // Handle signup error
+      // User Already exists error
+      Alert.alert('Error', error.message);
     }
+  }
+  
 
   function SwitchToLogin(){
       navigation.navigate('Login');
