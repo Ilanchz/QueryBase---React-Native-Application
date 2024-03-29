@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, StyleSheet, Image, TouchableOpacity, Alert, SafeAreaView, ActivityIndicator } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { getName } from '../firebaseConnect';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
@@ -8,13 +8,17 @@ import HomeScreenCard from '../Components/HomeScreenCard';
 import complainImage from '../assets/ComplainLogo.png';
 import QueryLogo from '../assets/QueryLogo.png';
 import ProfileLogo from '../assets/ProfileLogo.png';
+import BottomNavBar from '../Components/BottomNavBar';
+import { useNavigation } from '@react-navigation/native';
+
 
 const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 20;
 
 function WelcomeScreen() {
+  const navigation = useNavigation();
 
   function triggerNewComplaint() {
-    Alert.alert("Register New Complaint Logic"); //Create New Complaint Logic
+     navigation.navigate("Complaint");//Create New Complaint Logic
   }
   function triggerNewQuery() {
     Alert.alert("Register New Query Logic"); //Create New Query Logic
@@ -78,23 +82,11 @@ function WelcomeScreen() {
                 imageSource={QueryLogo}
                 onPress={triggerNewQuery}
               />
-              
-          </ScrollView>
-          <View style={styles.NavigationBarContainer}>
-            <View style={styles.NavigationBarWrapper}>
-              <TouchableOpacity>
-                <Image source={QueryLogo} style={styles.resizeComplainLogo}></Image>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Image source={complainImage} style={styles.resizeComplainLogo}></Image>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Image source={ProfileLogo} style={styles.resizeComplainLogo}></Image>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
 
+          </ScrollView>
+          <BottomNavBar source1={QueryLogo} source2={complainImage} source3={ProfileLogo}/>
+        </View>
+        
         
         
       </View>
@@ -105,6 +97,7 @@ function WelcomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
     backgroundColor: '#483670',
     alignItems: 'center',
     paddingTop: statusBarHeight,
@@ -136,23 +129,6 @@ const styles = StyleSheet.create({
   },
   scrollWrapper: {
     paddingBottom: 137,
-  },
-  resizeComplainLogo: {
-    width: 50,
-    height: 50,
-    padding: 5,
-  },
-  NavigationBarContainer: {
-    width: "100%",
-    backgroundColor: "#0c0326",
-    zIndex: 100, // Should make this responsive to layout
-    
-  },
-  NavigationBarWrapper: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
   },
 });
 
