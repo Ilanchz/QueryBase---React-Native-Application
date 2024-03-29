@@ -5,11 +5,11 @@ const windowHeight = Dimensions.get('window').height;
 
 function Chat(props) {
   const ChatData = props.ChatData;
-
+  console.log(ChatData);
   return (
     <View style={{ minHeight: windowHeight, gap: 10 }}>
       {ChatData.map((chat, index) => (
-        <View key={index} style={chat.status === 'sent' ? styles.ChatBubbleReceive : styles.ChatBubbleSend}>
+        <View key={index} style={chat.status === 'sent' ? styles.ChatBubbleSend : styles.ChatBubbleReceive}>
           <Text style={styles.ChatText}>{chat.message}</Text>
           <Text style={styles.ChatTimeStamp}>{chat.time}</Text>
         </View>
