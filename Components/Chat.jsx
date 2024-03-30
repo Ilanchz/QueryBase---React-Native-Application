@@ -5,7 +5,6 @@ const windowHeight = Dimensions.get('window').height;
 
 function Chat(props) {
   const ChatData = props.ChatData;
-  console.log(ChatData);
   return (
     <View style={{ minHeight: windowHeight, gap: 10 }}>
       {ChatData.map((chat, index) => (

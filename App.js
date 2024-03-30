@@ -5,6 +5,8 @@ import SignUpForm from './screens/SignUpForm.jsx';
 import LoginForm from './screens/LoginForm.jsx';
 import WelcomeScreen from './screens/WelcomeScreen.jsx';
 import ComplainScreen from './screens/ComplaintScreen.jsx';
+import ChatScreen from './screens/ChatScreen.jsx';
+import ComplainChat from './screens/ComplaintChat.jsx';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +32,16 @@ export default function App() {
         <Stack.Screen
           name="Complaint"
           component={ComplainScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ChatScreen"
+          component={ChatScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ComplaintChat"
+          component={ComplainChat}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

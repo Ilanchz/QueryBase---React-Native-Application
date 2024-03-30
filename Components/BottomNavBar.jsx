@@ -1,15 +1,22 @@
 import React from "react";
 import { StyleSheet, View,TouchableOpacity,Image } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
 
 function BottomNavBar(props){
+
+    const navigation = useNavigation();
+    const userEmail=props.userEmail;
+    function ComplaintChat(){
+      navigation.navigate('ChatScreen',{userEmail:userEmail}); //Go to ChatScreen
+    }
+
     return (
     <View style={styles.NavigationBarContainer}>
             <View style={styles.NavigationBarWrapper}>
               <TouchableOpacity>
                 <Image source={props.source1} style={styles.resizeComplainLogo}></Image>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={ComplaintChat}>
                 <Image source={props.source2} style={styles.resizeComplainLogo}></Image>
               </TouchableOpacity>
               <TouchableOpacity>

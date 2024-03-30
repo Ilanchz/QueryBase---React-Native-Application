@@ -19,7 +19,7 @@ function LoginForm(){
           const user = userCredential.user;
           console.log('User Logged In:', user.email);
           console.log(user.uid);
-          navigation.navigate('Welcome', { userId: user.uid });
+          navigation.navigate('Welcome', { userId: user.uid ,userEmail: user.email }); //Edi this to include username
         })
         .catch((error) => {
           // Handle signup error

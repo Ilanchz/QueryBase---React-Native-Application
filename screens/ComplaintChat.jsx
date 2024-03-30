@@ -23,32 +23,24 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height * 0.75;
 const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 20;
 
-function ComplainScreen() {
+function ComplainChat() {
 
-  const route = useRoute();
-const userEmail = route.params.userEmail; // userEmail will come from route props
-const navigation = useNavigation();
-const [loading, setLoading] = useState(true);
-const [chatText, setChatText] = useState('');
-const currentTime = new Date();
-const Time = currentTime.getHours() + ":" + currentTime.getMinutes();
-const [adminName, setAdminName] = useState("");
+    const route = useRoute();
+    const ChatHistory=route.params.ChatData;
+    const userEmail = route.params.userEmail; // userEmail will come from route props
+    const navigation = useNavigation();
+    const [loading, setLoading] = useState(true);
+    const [chatText, setChatText] = useState('');
+    const currentTime = new Date();
+    const Time = currentTime.getHours() + ":" + currentTime.getMinutes();
+    const newAdminName = route.params.adminName;
+    console.log(newAdminName);
+    const [adminName, setAdminName] = useState(newAdminName);
 
-const newAdminName = route.params.adminName;
-console.log(newAdminName); // Check if newAdminName is defined
+ // Check if newAdminName is defined
 
-// Set adminName only if newAdminName is defined
-if (newAdminName !== undefined) { 
-  setAdminName(newAdminName);
-} else {
-  console.log("Default behavior");
-}
 
-    //adminName will come from route props
-
-  const [ChatData, setChatData] = useState([
-    { message: "Auto-Generated: Create your new complaint here!\nRegister your complaint along with necessary documents.\nWe will assign you a new admin.", time: Time , status: "recieve" },
-  ]);
+  const [ChatData, setChatData] = useState(ChatHistory);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 2000);
@@ -61,34 +53,9 @@ if (newAdminName !== undefined) {
 
   async function triggerSend() {
 
-    //Update firebase use realtime chat data 
 
-    //Get Admins- will assign a specfic admin with lowest no of tickets 
-    //Returns admins username
-    
-
-    //Have to get senders username somehow
-
-    //Update firebase use realtime chat data 
-
-
-    if (adminName === null || adminName === "") {
-      try {
-        const fetchedAdminName = await getAdminWithLeastWork(); // Wait for the function to resolve
-        setadminName(fetchedAdminName); // Set the adminName state
-        console.log(fetchedAdminName); // Log fetched adminName
-        sendMessage(userEmail, fetchedAdminName, chatText); // Optionally, send message
-        //increment admin complaint count
-        IncrementAdminComplaint(fetchedAdminName);
-
-      } catch (error) {
-        console.error('Error fetching adminName:', error);
-        // Handle error appropriately
-      }
-    } else {
-      // If adminName is already available, directly send message
       sendMessage(userEmail, adminName, chatText);
-    }
+    
   
     const newDate = new Date();
     const newTime = currentTime.getHours() + ":" + currentTime.getMinutes();
@@ -199,4 +166,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ComplainScreen;
+export default ComplainChat;

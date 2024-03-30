@@ -17,16 +17,21 @@ const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 20
 function WelcomeScreen() {
   const navigation = useNavigation();
 
+  const route = useRoute();
+  const userId = route.params.userId;
+
+  const userEmail=route.params.userEmail;
+  const [userName, setUserName] = useState(null);
+
   function triggerNewComplaint() {
-     navigation.navigate("Complaint");//Create New Complaint Logic
+     navigation.navigate("Complaint",{userEmail: userEmail});//Create New Complaint Logic
   }
   function triggerNewQuery() {
     Alert.alert("Register New Query Logic"); //Create New Query Logic
   }
 
-  const route = useRoute();
-  const userId = route.params.userId;
-  const [userName, setUserName] = useState(null);
+  
+  
 
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular,
@@ -84,7 +89,7 @@ function WelcomeScreen() {
               />
 
           </ScrollView>
-          <BottomNavBar source1={QueryLogo} source2={complainImage} source3={ProfileLogo}/>
+          <BottomNavBar source1={QueryLogo} source2={complainImage} source3={ProfileLogo} userEmail={userEmail}/>
         </View>
         
         
