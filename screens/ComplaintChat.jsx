@@ -34,7 +34,6 @@ function ComplainChat() {
     const currentTime = new Date();
     const Time = currentTime.getHours() + ":" + currentTime.getMinutes();
     const newAdminName = route.params.adminName;
-    console.log(newAdminName);
     const [adminName, setAdminName] = useState(newAdminName);
 
  // Check if newAdminName is defined
@@ -43,7 +42,7 @@ function ComplainChat() {
   const [ChatData, setChatData] = useState(ChatHistory);
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
+    setTimeout(() => setLoading(false), 100);
   }, []);
 
   let [fontsLoaded] = useFonts({
@@ -117,6 +116,7 @@ const styles = StyleSheet.create({
     paddingTop: statusBarHeight,
   },
   ComplainScreenNavBarContainer: {
+    height:80,
     alignSelf: "flex-start",
     padding: 10,
     width: '100%',

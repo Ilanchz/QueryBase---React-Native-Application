@@ -26,23 +26,17 @@ const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 20
 function ComplainScreen() {
 
   const route = useRoute();
-const userEmail = route.params.userEmail; // userEmail will come from route props
-const navigation = useNavigation();
-const [loading, setLoading] = useState(true);
-const [chatText, setChatText] = useState('');
-const currentTime = new Date();
-const Time = currentTime.getHours() + ":" + currentTime.getMinutes();
-const [adminName, setAdminName] = useState("");
+  const userEmail = route.params.userEmail; // userEmail will come from route props
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
+  const [chatText, setChatText] = useState('');
+  const currentTime = new Date();
+  const Time = currentTime.getHours() + ":" + currentTime.getMinutes();
+  const [adminName, setAdminName] = useState("");
 
-const newAdminName = route.params.adminName;
-console.log(newAdminName); // Check if newAdminName is defined
-
+  const newAdminName = route.params.adminName;
 // Set adminName only if newAdminName is defined
-if (newAdminName !== undefined) { 
-  setAdminName(newAdminName);
-} else {
-  console.log("Default behavior");
-}
+
 
     //adminName will come from route props
 
@@ -51,7 +45,7 @@ if (newAdminName !== undefined) {
   ]);
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
+    setTimeout(() => setLoading(false), 500);
   }, []);
 
   let [fontsLoaded] = useFonts({
@@ -75,7 +69,7 @@ if (newAdminName !== undefined) {
     if (adminName === null || adminName === "") {
       try {
         const fetchedAdminName = await getAdminWithLeastWork(); // Wait for the function to resolve
-        setadminName(fetchedAdminName); // Set the adminName state
+        setAdminName(fetchedAdminName); // Set the adminName state
         console.log(fetchedAdminName); // Log fetched adminName
         sendMessage(userEmail, fetchedAdminName, chatText); // Optionally, send message
         //increment admin complaint count

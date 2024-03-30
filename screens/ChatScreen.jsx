@@ -47,7 +47,7 @@ function ChatScreen() {
   // getChatData with userEmail
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
+    setTimeout(() => setLoading(false), 500);
   }, []);
 
   let [fontsLoaded] = useFonts({

@@ -67,8 +67,14 @@ async function getName(userId) {
 }
 
 async function sendMessage(participant1, participant2, message) {
+
+  const date = new Date();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+
   try {
-    // Check if the conversation between participant1 and participant2 exists
     const chatRef = database.ref('chats');
     let chatId = null;
 
@@ -77,7 +83,6 @@ async function sendMessage(participant1, participant2, message) {
         const chat = childSnapshot.val();
         const participants = chat.participants;
 
-        // Check if the conversation participants match the current participants
         if (
           participants.includes(participant1) &&
           participants.includes(participant2)
@@ -87,16 +92,14 @@ async function sendMessage(participant1, participant2, message) {
       });
     });
 
-    // If the conversation exists, append the message
     if (chatId) {
       const messageRef = database.ref(`chats/${chatId}/messages`).push();
       await messageRef.set({
         message: message,
-        sender: participant1, // Assuming participant1 is the sender
-        time: firebase.database.ServerValue.TIMESTAMP,
+        status: participant1, // Assuming participant1 is the sender
+        time: formattedTime,
       });
     } else {
-      // If the conversation doesn't exist, create a new chat ID and add the participants
       const newChatRef = chatRef.push();
       chatId = newChatRef.key;
 
@@ -105,12 +108,15 @@ async function sendMessage(participant1, participant2, message) {
         messages: null, // Create an empty messages node
       });
 
-      // Add the first message
+      // Define messageRef for the newly created chat
       const messageRef = database.ref(`chats/${chatId}/messages`).push();
+
+      
+      // Set the message with the formatted time
       await messageRef.set({
         message: message,
-        sender: participant1, // Assuming participant1 is the sender
-        time: firebase.database.ServerValue.TIMESTAMP,
+        status: participant1, // Assuming participant1 is the sender
+        time: formattedTime,
       });
     }
 
@@ -119,6 +125,7 @@ async function sendMessage(participant1, participant2, message) {
     console.error('Error sending message:', error);
   }
 }
+
 
 async function retrieveChatData(participant) {
     try {
@@ -213,7 +220,6 @@ async function getConversation(username1, username2) {
     const chatsSnapshot = await chatsRef.once('value');
     
     // Log the snapshot to see its structure
-    console.log('Chats snapshot:', chatsSnapshot.val());
 
     const messages = [];
 
@@ -229,14 +235,14 @@ async function getConversation(username1, username2) {
         // Iterate over each message in the chat
         Object.values(chatMessages).forEach((message) => {
           // Determine sender based on message status
-          const sender = message.status === 'sent' ? username1 : username2;
+          const sender = message.status === username1 ? 'sent' : 'recieve';
           
           // Use time object from the message
           const time = message.time;
 
           messages.push({
             message: message.message,
-            sender: sender,
+            status: sender,
             time: time
           });
         });

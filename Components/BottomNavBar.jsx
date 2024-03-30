@@ -30,6 +30,7 @@ function BottomNavBar(props){
 
 const styles=StyleSheet.create({
     NavigationBarContainer: {
+        alignSelf: "flex-end",
         width: "100%",
         backgroundColor: "#0c0326",
         zIndex: 100, // Should make this responsive to layout

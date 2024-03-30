@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     paddingTop: statusBarHeight,
   },
   WelcomeTextWrapperContainer: {
+    height: 70,
     alignSelf: "flex-start",
     padding: 10,
     width: '100%',
