@@ -60,6 +60,8 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   ChatContact: {
+    margin: 5,
+    padding: 5,
     fontSize: 25,
     alignSelf: 'flex-start',
     marginLeft: 10,
