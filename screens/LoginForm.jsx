@@ -17,8 +17,6 @@ function LoginForm(){
       auth.signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log('User Logged In:', user.email);
-          console.log(user.uid);
           navigation.navigate('Welcome', { userId: user.uid ,userEmail: user.email }); //Edi this to include username
         })
         .catch((error) => {

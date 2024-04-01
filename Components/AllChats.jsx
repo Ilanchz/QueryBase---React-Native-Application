@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getConversation } from '../firebaseConnect';
-import ComplainScreen from '../screens/ComplaintScreen';
 import { useNavigation } from '@react-navigation/native';
 
 const windowHeight = Dimensions.get('window').height;
@@ -13,15 +12,11 @@ function Chat(props) {
   const userEmail=props.userEmail;
 
   function openChat(value) {
-    console.log(value);
     const newUser=ChatHistory[value];
-    console.log(userEmail+":"+newUser);
-
     //getConversation and store it in the format of  [{ message: "message", time: Time , status: "recieve" }],
     getConversation(userEmail,newUser)
     .then(conversation => {
       // Log the retrieved conversation data
-      console.log('Conversation:', conversation);
       navigation.navigate("ComplaintChat",{ChatData:conversation,userEmail:userEmail,adminName:newUser});
     })
     .catch(error => {

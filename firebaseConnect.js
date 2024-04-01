@@ -1,19 +1,26 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-
 import 'firebase/compat/database';
 
+const api_key=process.env.API_KEY;   //Begin Including firebase Config Keys over here
+const auth_domain=process.env.AUTH_DOMAIN;   
+const project_id=process.env.PROJECT_ID;
+const storage_bucket=process.env.STORAGE_BUCKET;
+const messaging_sender_id=process.env.MESSAGING_SENDER_ID;
+const appid=process.env.APPID;
+const measurement_id=process.env.MEASUREMENT_ID;
+const database_url=process.env.DATABASE_URL;  //Real-time database url for chats and admin assignment
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB9oB6MIKOf2FbxTonAIXOPkFHg7oCE6nY",
-  authDomain: "cypher-3e60c.firebaseapp.com",
-  projectId: "cypher-3e60c",
-  storageBucket: "cypher-3e60c.appspot.com",
-  messagingSenderId: "426037548548",
-  appId: "1:426037548548:web:7cfa80648f8d1cc6fd4751",
-  measurementId: "G-ST1M0XGYC7",
-  databaseURL: "https://cypher-3e60c-default-rtdb.asia-southeast1.firebasedatabase.app/"
+  apiKey: api_key,
+  authDomain: auth_domain,
+  databaseURL: database_url,
+  projectId: project_id,
+  storageBucket: storage_bucket,
+  messagingSenderId: messaging_sender_id,
+  appId: appid,
+  measurementId: measurement_id
 };
 let app;
 if (firebase.apps.length===0){
@@ -27,27 +34,23 @@ const db = firebase.firestore();
 
 const database = firebase.database();
 
-async function addUserInitialData(password,email, name, dob) {
-  console.log("Triggered!");
+async function addUserInitialData(password,email, name, dob) {  //Invokes after signing up a user
   try {
     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
     const user = userCredential.user;
-    console.log('User Created:', user.email);
     const userRef = db.collection('user_info').doc(user.uid);
-    console.log(userRef);
     await userRef.set({
       email: email,
       name: name,
       dob: dob,
     });
-    console.log('User signed up successfully!');
   } catch (error) {
     console.error('Error adding user data:', error);
     throw error; // Re-throw the error to handle it in the calling code if needed
   }
 }
 
-async function getName(userId) {
+async function getName(userId) {   //Gets UserName of a particular userId
   try {
     const userRef = db.collection('user_info').doc(userId);
     const userDoc = await userRef.get();
@@ -57,7 +60,6 @@ async function getName(userId) {
       const userName = userData.name;
       return userName;
     } else {
-      console.log('No such user document!');
       return null;
     }
   } catch (error) {
@@ -66,14 +68,11 @@ async function getName(userId) {
   }
 }
 
-async function sendMessage(participant1, participant2, message) {
-
+async function sendMessage(participant1, participant2, message) {  //Sends message from participant1 to participant2
   const date = new Date();
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-
-
   try {
     const chatRef = database.ref('chats');
     let chatId = null;
@@ -82,7 +81,6 @@ async function sendMessage(participant1, participant2, message) {
       snapshot.forEach((childSnapshot) => {
         const chat = childSnapshot.val();
         const participants = chat.participants;
-
         if (
           participants.includes(participant1) &&
           participants.includes(participant2)
@@ -120,14 +118,13 @@ async function sendMessage(participant1, participant2, message) {
       });
     }
 
-    console.log('Message sent successfully!');
   } catch (error) {
     console.error('Error sending message:', error);
   }
 }
 
 
-async function retrieveChatData(participant) {
+async function retrieveChatData(participant) {  //Retrieves the chat data of a participant
     try {
       const chatRef = database.ref('chats');
       const chatData = [];
@@ -149,7 +146,6 @@ async function retrieveChatData(participant) {
         });
       });
   
-      console.log('Chat data retrieved successfully:', chatData);
       return chatData;
     } catch (error) {
       console.error('Error retrieving chat data:', error);
@@ -157,7 +153,7 @@ async function retrieveChatData(participant) {
     }
 }
 
-async function getAdminWithLeastWork() {
+async function getAdminWithLeastWork() { //Gets admin who has least work
   try {
     const adminSnapshot = await database.ref('admin').once('value');
     let admins = [];
@@ -176,7 +172,6 @@ async function getAdminWithLeastWork() {
     // Retrieve the admin with the least workload
     const adminWithLeastWork = admins[0];
 
-    console.log('Admin with least workload:', adminWithLeastWork.adminaccount);
     return adminWithLeastWork.adminaccount;
   } catch (error) {
     console.error('Error retrieving admin data:', error);
@@ -184,7 +179,7 @@ async function getAdminWithLeastWork() {
   }
 }
 
-async function IncrementAdminComplaint(adminaccount) {
+async function IncrementAdminComplaint(adminaccount) {  //Increments the count of complain in a particular adminaccount
   try {
     // Get a reference to the admin collection
     const adminRef = database.ref('admin');
@@ -202,16 +197,15 @@ async function IncrementAdminComplaint(adminaccount) {
         noofcomplaints: (adminSnapshot.val()[adminKey].noofcomplaints || 0) + 1
       });
 
-      console.log('Admin complaint count incremented successfully!');
     } else {
-      console.log('Admin not found.');
+      console.log('Error: Admin not found.');
     }
   } catch (error) {
     console.error('Error incrementing admin complaint count:', error);
     throw error;
   }
 }
-async function getConversation(username1, username2) {
+async function getConversation(username1, username2) {  //Gets entire message conversation between user1 and user2
   try {
     // Reference to the chats node
     const chatsRef = database.ref('chats');
@@ -219,8 +213,6 @@ async function getConversation(username1, username2) {
     // Retrieve all chats where the provided usernames are participants
     const chatsSnapshot = await chatsRef.once('value');
     
-    // Log the snapshot to see its structure
-
     const messages = [];
 
     // Iterate over each chat
@@ -249,7 +241,6 @@ async function getConversation(username1, username2) {
       }
     });
 
-    console.log('Messages retrieved successfully:', messages);
     return messages;
   } catch (error) {
     console.error('Error retrieving conversation:', error);
@@ -258,7 +249,7 @@ async function getConversation(username1, username2) {
 }
 
 
-async function getAllChats(username) {
+async function getAllChats(username) {  //Gets all the account names that are in contact with the logged in account
   try {
     // Reference to the chats node
     const chatsRef = database.ref('chats');
@@ -281,7 +272,6 @@ async function getAllChats(username) {
       }
     });
 
-    console.log('All chats retrieved successfully:', participantsList);
     return participantsList;
   } catch (error) {
     console.error('Error retrieving all chats:', error);

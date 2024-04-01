@@ -70,7 +70,6 @@ function ComplainScreen() {
       try {
         const fetchedAdminName = await getAdminWithLeastWork(); // Wait for the function to resolve
         setAdminName(fetchedAdminName); // Set the adminName state
-        console.log(fetchedAdminName); // Log fetched adminName
         sendMessage(userEmail, fetchedAdminName, chatText); // Optionally, send message
         //increment admin complaint count
         IncrementAdminComplaint(fetchedAdminName);

@@ -7,11 +7,8 @@ import BottomNavBar from '../Components/BottomNavBar';
 import QueryLogo from '../assets/QueryLogo.png';
 import ProfileLogo from '../assets/ProfileLogo.png';
 import { Dimensions } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
 import AllChats from '../Components/AllChats';
 import { useRoute } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
 import { getAllChats } from '../firebaseConnect';
 
 //New
