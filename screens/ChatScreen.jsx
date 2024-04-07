@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, StyleSheet, Alert, ActivityIndicator, Image, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Alert, ActivityIndicator, Image, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { StatusBar, Platform } from 'react-native';
 import complainImage from '../assets/ComplainLogo.png';
@@ -60,7 +60,7 @@ function ChatScreen() {
     );
   } else {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.ComplainScreenNavBarContainer}>
           <View style={styles.ComplainScreenNavBar}>
             <Image source={complainImage} style={styles.NavBarLogo} />
@@ -74,7 +74,7 @@ function ChatScreen() {
           </ScrollView>
           <BottomNavBar source1={QueryLogo} source2={complainImage} source3={ProfileLogo} />
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

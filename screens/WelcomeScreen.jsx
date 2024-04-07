@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Alert, ActivityIndicator, SafeAreaView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { getName } from '../firebaseConnect';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
@@ -62,7 +62,7 @@ function WelcomeScreen() {
     ); // Needs a loading screen
   } else {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.WelcomeTextWrapperContainer}>
           <View style={styles.WelcomeTextWrapper}>
             <Text style={styles.WelcomeText}>Welcome, {userName || 'loading...'}.  </Text>
@@ -94,7 +94,7 @@ function WelcomeScreen() {
         
         
         
-      </View>
+      </SafeAreaView>
     );
   }
 
