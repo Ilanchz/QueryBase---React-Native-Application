@@ -5,8 +5,7 @@ ScrollView for a huge chat length should be optimised as ListView or FlatView is
 Realtime database listener to be setup for realtime chat update.
 
 To be Fixed:
-New UI for the chat screen.
-Realtime updates listener
+Seperate abstraction for admin and users
 
 .env configuration:
 1. Navigate to firebase console
