@@ -1,10 +1,8 @@
 A react native (with expo) mobile application for Android and IOS to have a client and admin complaint/query management system.
 
 Tech Stack:
+
 ![react_logo](https://github.com/Ilanchz/QueryBase---React-Native-Application/assets/85609237/2f778166-4c3a-4d2b-80ca-4c2de59398e7)
-
-
-
 ![firebase](https://github.com/Ilanchz/QueryBase---React-Native-Application/assets/85609237/c97855fa-6d65-4575-a43b-e4901328078c)
 
 
