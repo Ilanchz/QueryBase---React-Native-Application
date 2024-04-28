@@ -1,7 +1,7 @@
 A React Native (with Expo) mobile application for Android and IOS to have a client and admin complaint/query management system.
 
 Issues:
-ScrollView for a huge chat length should be optimised as ListView or FlatView is not used.
+ScrollView for a huge chat length should be optimised as ListView or FlatView.This optimisation is still undone.
 Realtime database listener to be setup for realtime chat update.
 
 To be Fixed:
