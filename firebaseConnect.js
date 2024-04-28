@@ -205,7 +205,7 @@ async function IncrementAdminComplaint(adminaccount) {  //Increments the count o
     throw error;
   }
 }
-async function getConversation(username1, username2) {  //Gets entire message conversation between user1 and user2
+async function getConversation(username1, username2) {
   try {
     // Reference to the chats node
     const chatsRef = database.ref('chats');
@@ -227,7 +227,7 @@ async function getConversation(username1, username2) {  //Gets entire message co
         // Iterate over each message in the chat
         Object.values(chatMessages).forEach((message) => {
           // Determine sender based on message status
-          const sender = message.status === username1 ? 'sent' : 'recieve';
+          const sender = message.status === username1 ? 'sent' : 'received';
           
           // Use time object from the message
           const time = message.time;
